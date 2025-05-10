@@ -25,8 +25,9 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
         {
             trackLanguage = audioTracks[i].language;
             console.log('The audio track lang code: %s', trackLanguage);
-            newLabel = iso639_1_List[trackLanguage];
-            console.log("Current Lang Label %s is going to change to %s",audioTracks[i].label, newLabel);
+            newLabel = iso639_1_List[(trackLanguage.toLowerCase())];
+            console.log("Current Lang Label %s is going to change to %s",
+              audioTracks[i].label, newLabel);
             if (typeof newLabel == "string" && newLabel.length != 0)
             {
               console.log("Changing the label to %s", newLabel);
