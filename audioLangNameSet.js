@@ -10,7 +10,7 @@
                 following ISO 639-1
  */
 
-videojs.registerPlugin('autoAudioTrackSelection', function()
+videojs.registerPlugin('langLabelChange', function()
 {
     var myPlayer = this;
     myPlayer.on('loadedmetadata',function()
@@ -18,19 +18,22 @@ videojs.registerPlugin('autoAudioTrackSelection', function()
         var trackLanguage, audioTracks;
 
         // Get the list of audio tracks in the video asset
+        // Note: This doesn't work on Safari and in iOS Mobile devices
+        // We always get array of 0 length value for Audio tracks
+        // in Safari and in iOS
         audioTracks = myPlayer.audioTracks();
 
         var newLabel = "";
+
         for (var i = 0; i < (audioTracks.length); i++)
         {
             trackLanguage = audioTracks[i].language;
-            console.log('The audio track lang code: %s', trackLanguage);
             newLabel = iso639_1_List[(trackLanguage.toLowerCase())];
-            console.log("Current Lang Label %s is going to change to %s",
-              audioTracks[i].label, newLabel);
+      
             if (typeof newLabel == "string" && newLabel.length != 0)
             {
-              console.log("Changing the label to %s", newLabel);
+              console.log("Changing current %s the label to %s",
+                audioTracks[i].label, newLabel);
               audioTracks[i].label = newLabel;
             }
         }
